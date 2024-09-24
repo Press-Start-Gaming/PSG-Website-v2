@@ -1,0 +1,184 @@
+@font-face {
+  font-family: 'PSG Font';
+  src: url('/fonts/PSG.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+header {
+  text-align: center;
+  background-color: black;
+}
+
+.space-banner {
+  position: relative;
+  background: url('/resources/spaceBackground.png') repeat-x center;
+  background-size: 960px 240px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  animation: spaceScroll 120s linear infinite;
+}
+
+@keyframes spaceScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -1000px 0;
+  }
+}
+
+@keyframes spaceScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -1000px 0;
+  }
+}
+
+.psg-logo {
+  position: relative;
+}
+
+.psg-logo img {
+  width: 500px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #00ffcc;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.hero-text {
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.hero h2 {
+  font-family: 'PSG Font', sans-serif;
+  margin-bottom: 20px;
+}
+
+.games-list {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.games-list h1 {
+  font-size: 36px;
+  font-family: 'PSG Font', sans-serif;
+  margin-bottom: 20px;
+}
+
+.game-tile-container {
+  display: flex;
+  gap: 20px;
+  animation: scrollTiles 60s linear infinite;
+  width: calc(150px * 18 + 20px * 17);
+  margin-bottom: 20px;
+}
+
+.game-tile {
+  background-color: #2b2b2b;
+  border-radius: 8px;
+  transition: transform 0.3s;
+  flex: 0 0 250px;
+  text-align: center;
+}
+
+.game-tile img {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.game-tile h2 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  font-family: 'PSG Font', sans-serif;
+}
+
+.game-tile p {
+  font-size: 14px;
+  color: #cccccc;
+}
+
+.game-tile:hover {
+  transform: scale(1.05);
+  background-color: #333333;
+  animation-play-state: paused;
+}
+
+.game-tile-container:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollTiles {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.social-links {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.social-links a {
+  margin: 0 15px;
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.social-links a img {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s, filter 0.3s;
+  filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff)
+    drop-shadow(0 0 15px #fff) drop-shadow(0 0 20px #fff);
+}
+
+.social-links a:hover img {
+  transform: translateY(-5px);
+  filter: brightness(1.2) drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff)
+    drop-shadow(0 0 15px #fff) drop-shadow(0 0 20px #fff);
+}
+
+.rights {
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  color: #ffffff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff;
+}

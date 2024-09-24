@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Press Start Gaming</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" href="/resources/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <%- include('header') %>
+
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <h2>Welcome to Press Start Gaming</h2>
+          <p>
+            We are a community of gamers who love to play and talk about games.
+          </p>
+        </div>
+      </section>
+      <section class="games-list">
+        <h1>Games We Play</h1>
+        <div class="game-tile-container">
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/squad.png" alt="Squad" />
+            <h2>Squad</h2>
+            <p>A tactical first-person shooter game.</p>
+          </div>
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/squad44.png" alt="Squad 44" />
+            <h2>Squad 44</h2>
+            <p>A World War II tactical shooter.</p>
+          </div>
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/minecraft.png" alt="Minecraft" />
+            <h2>Minecraft</h2>
+            <p>A sandbox game about placing blocks and going on adventures.</p>
+          </div>
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/foundryvtt.jpg" alt="FoundryVTT" />
+            <h2>FoundryVTT</h2>
+            <p>A virtual tabletop for playing RPGs online.</p>
+          </div>
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/dayz.jpg" alt="DayZ" />
+            <h2>DayZ</h2>
+            <p>A survival game set in a post-apocalyptic world.</p>
+          </div>
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/amongus.jpg" alt="Among Us" />
+            <h2>Among Us</h2>
+            <p>A multiplayer game of teamwork and betrayal.</p>
+          </div>
+          <div class="game-tile">
+            <img src="/resources/gameHeaders/rust.jpg" alt="Rust" />
+            <h2>Rust</h2>
+            <p>A survival game where you must gather resources to survive.</p>
+          </div>
+          <div class="game-tile">
+            <img
+              src="/resources/gameHeaders/eft.jpg"
+              alt="Escape from Tarkov"
+            />
+            <h2>Escape from Tarkov</h2>
+            <p>A hardcore and realistic online FPS.</p>
+          </div>
+          <div class="game-tile">
+            <img
+              src="/resources/gameHeaders/starcitizen.jpg"
+              alt="Star Citizen"
+            />
+            <h2>Star Citizen</h2>
+            <p>A space trading and combat simulator.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <%- include('footer') %>
+
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>
