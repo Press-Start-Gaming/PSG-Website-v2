@@ -21,6 +21,14 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
+app.get('/merch', (req, res) => {
+  res.render('merch');
+});
+
 // Start the server
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running on ${process.env.WEB_DOMAIN}`);

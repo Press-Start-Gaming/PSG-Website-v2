@@ -3,11 +3,23 @@
   src: url('/fonts/PSG.ttf') format('truetype');
 }
 
+html,
 body {
+  height: 100%;
   margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: 'Arial', sans-serif;
   background-color: #1a1a1a;
   color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 header {
@@ -17,28 +29,19 @@ header {
 
 .space-banner {
   position: relative;
-  background: url('/resources/spaceBackground.png') repeat-x center;
+  background: url('/resources/spaceBackground.png') repeat center;
   background-size: 960px 240px;
   padding-top: 25px;
   padding-bottom: 25px;
-  animation: spaceScroll 120s linear infinite;
+  animation: spaceScrollDiagonal 120s linear infinite;
 }
 
-@keyframes spaceScroll {
+@keyframes spaceScrollDiagonal {
   0% {
     background-position: 0 0;
   }
   100% {
-    background-position: -1000px 0;
-  }
-}
-
-@keyframes spaceScroll {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -1000px 0;
+    background-position: -1000px -1000px;
   }
 }
 
@@ -50,104 +53,34 @@ header {
   width: 500px;
 }
 
-nav ul {
-  list-style: none;
+header nav {
+  margin: 0;
   padding: 0;
 }
 
-nav ul li {
-  display: inline;
-  margin: 0 15px;
+header nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-nav ul li a {
+header nav ul li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+header nav ul li a {
   color: white;
+  display: block;
+  padding: 10px 15px;
   text-decoration: none;
   font-size: 18px;
   transition: color 0.3s;
 }
 
 nav ul li a:hover {
-  color: #00ffcc;
-}
-
-.hero {
-  text-align: center;
-  padding: 50px 0;
-}
-
-.hero-text {
-  border: 2px solid #fff;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-.hero h2 {
-  font-family: 'PSG Font', sans-serif;
-  margin-bottom: 20px;
-}
-
-.games-list {
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.games-list h1 {
-  font-size: 36px;
-  font-family: 'PSG Font', sans-serif;
-  margin-bottom: 20px;
-}
-
-.game-tile-container {
-  display: flex;
-  gap: 20px;
-  animation: scrollTiles 60s linear infinite;
-  width: calc(150px * 18 + 20px * 17);
-  margin-bottom: 20px;
-}
-
-.game-tile {
-  background-color: #2b2b2b;
-  border-radius: 8px;
-  transition: transform 0.3s;
-  flex: 0 0 250px;
-  text-align: center;
-}
-
-.game-tile img {
-  width: 100%;
-  border-radius: 8px 8px 0 0;
-}
-
-.game-tile h2 {
-  margin: 10px 0 5px;
-  font-size: 18px;
-  font-family: 'PSG Font', sans-serif;
-}
-
-.game-tile p {
-  font-size: 14px;
-  color: #cccccc;
-}
-
-.game-tile:hover {
-  transform: scale(1.05);
-  background-color: #333333;
-  animation-play-state: paused;
-}
-
-.game-tile-container:hover {
-  animation-play-state: paused;
-}
-
-@keyframes scrollTiles {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+  color: #facc00;
 }
 
 .social-links {
@@ -156,14 +89,14 @@ nav ul li a:hover {
 }
 
 .social-links a {
-  margin: 0 15px;
+  margin: 0 40px;
   display: inline-block;
   transition: transform 0.3s;
 }
 
 .social-links a img {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   transition: transform 0.3s, filter 0.3s;
   filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff)
     drop-shadow(0 0 15px #fff) drop-shadow(0 0 20px #fff);
@@ -181,4 +114,9 @@ nav ul li a:hover {
   padding: 10px;
   color: #ffffff;
   text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff;
+}
+
+footer {
+  color: #fff;
+  text-align: center;
 }

@@ -1,0 +1,90 @@
+.hero {
+  max-width: 960px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.hero-text {
+  text-align: center;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.hero h2 {
+  font-family: 'PSG Font', sans-serif;
+  margin-bottom: 20px;
+  font-size: 48px;
+}
+
+.hero p {
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.games-list {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.games-list h1 {
+  font-size: 36px;
+  font-family: 'PSG Font', sans-serif;
+  margin-bottom: 20px;
+}
+
+.game-tile-container {
+  display: flex;
+  gap: 20px;
+  animation: scrollTiles 60s linear infinite;
+  width: calc(150px * 18 + 20px * 17);
+  margin-bottom: 20px;
+}
+
+.game-tile {
+  background-color: #2b2b2b;
+  border-radius: 8px;
+  transition: transform 0.3s;
+  flex: 0 0 250px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.game-tile img {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.game-tile h2 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  font-family: 'PSG Font', sans-serif;
+  padding: 0 10px;
+}
+
+.game-tile p {
+  font-size: 14px;
+  color: #cccccc;
+  padding: 0 10px;
+}
+
+.game-tile:hover {
+  transform: scale(1.05);
+  background-color: #333333;
+  animation-play-state: paused;
+}
+
+.game-tile-container:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollTiles {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
