@@ -5,24 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Press Start Gaming</title>
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/merch.css" />
     <link rel="icon" href="/resources/favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <%- include('header') %>
 
     <main>
-      <section class="hero">
-        <div class="hero-text">
-          <h2>Press Start Gaming Merch</h2>
+      <section class="merch-hero">
+        <div class="merch-hero-text">
+          <h2>PSG Merchandise</h2>
           <p>
             Show your support for PSG with our exclusive line of merchandise.
           </p>
         </div>
       </section>
+      <section class="merch-items">
+        <div id="merch-items-container" class="merch-items-container"></div>
+      </section>
     </main>
 
     <%- include('footer') %>
 
-    <script src="/js/scripts.js"></script>
+    <script src="/js/merch.js"></script>
   </body>
 </html>
