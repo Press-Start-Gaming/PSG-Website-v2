@@ -157,6 +157,12 @@ header {
   width: auto;
   max-width: 100%;
   flex-shrink: 1;
+  transition: transform 1.5s ease-in-out;
+}
+
+.separator-images img:hover {
+  transition: transform 0.75s ease-in-out;
+  transform: scale(0) rotate(360deg);
 }
 
 .rights {
