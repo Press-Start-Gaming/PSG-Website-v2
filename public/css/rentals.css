@@ -81,3 +81,44 @@
   color: #f1c40f;
   margin-top: 10px;
 }
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .rentals-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .game-list {
+    grid-template-columns: 1fr;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .game {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .game img {
+    margin: 0 auto 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rentals-hero h2 {
+    font-size: 36px;
+  }
+
+  .rentals-hero-p {
+    font-size: 18px;
+  }
+
+  .game-description h3 {
+    font-size: 1.2em;
+  }
+
+  .price {
+    font-size: 1em;
+  }
+}

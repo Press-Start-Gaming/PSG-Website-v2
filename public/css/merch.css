@@ -105,3 +105,61 @@
 .unavailable:hover {
   background-color: #8b0000;
 }
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .merch-hero h2 {
+    font-size: 36px;
+  }
+
+  .merch-hero p {
+    font-size: 20px;
+  }
+
+  .merch-item {
+    width: calc(50% - 32px);
+  }
+
+  .merch-item h2 {
+    font-size: 16px;
+  }
+
+  .merch-item p {
+    font-size: 12px;
+  }
+
+  .buy-button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .merch-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .merch-hero h2 {
+    font-size: 28px;
+  }
+
+  .merch-hero p {
+    font-size: 18px;
+  }
+
+  .merch-item {
+    width: 100%;
+  }
+
+  .merch-item h2 {
+    font-size: 14px;
+  }
+
+  .merch-item p {
+    font-size: 12px;
+  }
+
+  .buy-button {
+    font-size: 12px;
+  }
+}

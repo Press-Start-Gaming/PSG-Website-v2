@@ -24,11 +24,18 @@
     </div>
   </div>
   <nav>
-    <ul>
+    <div class="menu-icon" onclick="toggleNavbar()">☰ Menu</div>
+    <ul class="navbar">
       <li><a href="/">Home</a></li>
       <li><a href="/about">About PSG</a></li>
       <li><a href="/merch">PSG Merch</a></li>
       <li><a href="/rent-a-server">Rent a Server</a></li>
     </ul>
   </nav>
+  <script>
+    function toggleNavbar() {
+      const navbar = document.querySelector('.navbar');
+      navbar.classList.toggle('active');
+    }
+  </script>
 </header>
