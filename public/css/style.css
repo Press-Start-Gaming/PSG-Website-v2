@@ -122,3 +122,21 @@ footer {
   color: #fff;
   text-align: center;
 }
+
+.link {
+  color: #6dcff0;
+  text-decoration: none;
+}
+
+.link:visited {
+  color: #00baf8;
+}
+
+.link:hover {
+  color: #00bfff;
+  text-decoration: underline;
+}
+
+.link:active {
+  color: #00bfff;
+}
