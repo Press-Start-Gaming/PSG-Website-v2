@@ -5,6 +5,7 @@ import cron from 'node-cron';
 import dotenv from 'dotenv';
 import express from 'express';
 import { fileURLToPath } from 'url';
+import mysql from 'mysql2/promise';
 
 // Load environment variables
 dotenv.config();
@@ -15,6 +16,15 @@ const DISCORD_API_URL = 'https://discord.com/api/v9';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const avatarsDir = path.join(__dirname, 'public', 'resources', 'avatars');
+
+// Database connection
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+});
 
 const teamMembers = {
   gabevalentine: { id: '341610972303327233' },
@@ -73,6 +83,21 @@ app.get('/about', (req, res) => {
 
 app.get('/merch', (req, res) => {
   res.render('merch');
+});
+
+app.get('/rent-a-server', (req, res) => {
+  res.render('rent-a-server');
+});
+
+app.get('/merch-data', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM psg_merch_items');
+    console.log('Query result:', rows);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error executing query', err.stack);
+    res.status(500).send('Error fetching data');
+  }
 });
 
 // Start the server

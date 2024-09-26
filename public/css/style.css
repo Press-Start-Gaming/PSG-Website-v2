@@ -8,6 +8,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  cursor: default;
 }
 
 body {
@@ -33,7 +34,7 @@ header {
   background-size: 960px 240px;
   padding-top: 25px;
   padding-bottom: 25px;
-  animation: spaceScrollDiagonal 120s linear infinite;
+  animation: spaceScrollDiagonal 200s linear infinite;
 }
 
 @keyframes spaceScrollDiagonal {
@@ -80,6 +81,7 @@ header nav ul li a {
 }
 
 nav ul li a:hover {
+  transform: translateY(-3px) scale(1.1);
   color: #facc00;
 }
 
@@ -103,7 +105,7 @@ nav ul li a:hover {
 }
 
 .social-links a:hover img {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.1);
   filter: brightness(1.2) drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff)
     drop-shadow(0 0 15px #fff) drop-shadow(0 0 20px #fff);
 }
