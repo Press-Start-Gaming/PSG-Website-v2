@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Press Start Gaming</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/events.css" />
+    <link rel="icon" href="/resources/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <%- include('header') %>
+
+    <main>
+      <section class="events-hero">
+        <div class="events-hero-text">
+          <h2>PSG Events</h2>
+          <p>
+            Press Start Gaming hosts a variety of events for our members. We
+            host events for games like Squad, Squad 44, Minecraft, FoundryVTT,
+            Valheim, Arma 3, and FiveM. We also host community events like movie
+            nights, game nights, and more.<br /><br />Here are some upcoming
+            events:
+          </p>
+        </div>
+      </section>
+      <section class="events-calendar-section">
+        <div
+          id="events-calendar-container"
+          class="events-calendar-container"
+        ></div>
+      </section>
+
+      <%- include('separator') %>
+    </main>
+
+    <%- include('footer') %>
+    <script src="/js/events.js"></script>
+  </body>
+</html>
