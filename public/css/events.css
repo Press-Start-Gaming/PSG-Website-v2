@@ -66,6 +66,8 @@
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .event-details h2 {
@@ -88,8 +90,10 @@
 .host-info {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .host-avatar {
