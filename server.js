@@ -54,10 +54,22 @@ async function fetchAndSaveAvatars() {
     const { id } = teamMembers[member];
     const userData = await fetchUserData(id);
     const avatarHash = userData.avatar;
-    const url = `https://cdn.discordapp.com/avatars/${id}/${avatarHash}.png`;
+    const isGif = avatarHash.startsWith('a_');
+    const newExtension = isGif ? 'gif' : 'png';
+    const oldExtension = isGif ? 'png' : 'gif';
+    const newFilePath = path.join(avatarsDir, `${member}.${newExtension}`);
+    const oldFilePath = path.join(avatarsDir, `${member}.${oldExtension}`);
+
+    // Remove the old file if it exists
+    if (fs.existsSync(oldFilePath)) {
+      fs.unlinkSync(oldFilePath);
+    }
+
+    const url = `https://cdn.discordapp.com/avatars/${id}/${avatarHash}.${newExtension}`;
     const response = await fetch(url);
-    const buffer = await response.buffer();
-    fs.writeFileSync(path.join(avatarsDir, `${member}.png`), buffer);
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    fs.writeFileSync(newFilePath, buffer);
   }
 }
 

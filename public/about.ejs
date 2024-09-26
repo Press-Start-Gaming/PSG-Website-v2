@@ -40,7 +40,7 @@
             <img
               src="/resources/avatars/gabevalentine.png"
               alt="GabeValentine"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - GabeValentine</h2>
@@ -52,7 +52,7 @@
             <img
               src="/resources/avatars/ignis.png"
               alt="Ignis"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - Ignis</h2>
@@ -65,7 +65,7 @@
             <img
               src="/resources/avatars/cruisectrl.png"
               alt="CruiseCtrl"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - CruiseCtrl</h2>
@@ -77,7 +77,7 @@
             <img
               src="/resources/avatars/kitty.png"
               alt="KittyGotClawz"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - KittyGotClawz</h2>
@@ -89,7 +89,7 @@
             <img
               src="/resources/avatars/rats.png"
               alt="Rats"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - A Bunch of Rats In A Trench Coat</h2>
@@ -101,7 +101,7 @@
             <img
               src="/resources/avatars/goofy.png"
               alt="TheG00fyGooba"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - TheG00fyGooba</h2>
@@ -113,7 +113,7 @@
             <img
               src="/resources/avatars/salparadise.png"
               alt="SalParadise21"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - SalParadise21</h2>
@@ -125,7 +125,7 @@
             <img
               src="/resources/avatars/mercenary.png"
               alt="Mercenary"
-              onerror="this.onerror=null;this.src='/resources/PixelBud.png';"
+              onerror="handleImageError(this)"
             />
             <div class="member-tile-content">
               <h2>PSG - Mercenary</h2>
@@ -140,5 +140,15 @@
     </main>
 
     <%- include('footer') %>
+
+    <script>
+      function handleImageError(img) {
+        img.onerror = function () {
+          img.onerror = null;
+          img.src = '/resources/PixelBud.png';
+        };
+        img.src = img.src.replace('.png', '.gif');
+      }
+    </script>
   </body>
 </html>
