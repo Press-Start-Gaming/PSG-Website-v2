@@ -92,7 +92,6 @@ app.get('/rent-a-server', (req, res) => {
 app.get('/merch-data', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM psg_merch_items');
-    console.log('Query result:', rows);
     res.json(rows);
   } catch (err) {
     console.error('Error executing query', err.stack);
