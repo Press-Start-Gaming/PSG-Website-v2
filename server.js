@@ -215,6 +215,14 @@ app.get('/events-data', async (req, res) => {
   }
 });
 
+app.get('/tos', (req, res) => {
+  res.render('tos');
+});
+
+app.get('/privacy', (req, res) => {
+  res.render('privacy');
+});
+
 // Start the server
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running on ${process.env.WEB_DOMAIN}`);
