@@ -139,7 +139,9 @@ async function fetchScheduledEvents() {
 
     if (event.creator) {
       if (event.creator.avatar) {
-        event.creator_avatar_url = `https://cdn.discordapp.com/avatars/${event.creator.id}/${event.creator.avatar}.png?size=2048`;
+        const isGif = event.creator.avatar.startsWith('a_');
+        const extension = isGif ? 'gif' : 'png';
+        event.creator_avatar_url = `https://cdn.discordapp.com/avatars/${event.creator.id}/${event.creator.avatar}.${extension}?size=2048`;
       }
 
       const memberDetails = await fetchMemberDetails(
