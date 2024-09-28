@@ -31,6 +31,24 @@
       <li><a href="/about">About PSG</a></li>
       <li><a href="/merch">PSG Merch</a></li>
       <li><a href="/rent-a-server">Rent a Server</a></li>
+      <% if (user) { %>
+      <li>
+        <a href="/profile"
+          >Logged in as:
+          <img
+            src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
+            alt="User Avatar"
+            width="30"
+            height="30"
+            class="rounded-circle"
+          />
+          <%= user.username %></a
+        >
+      </li>
+      <li><a href="/logout">Logout</a></li>
+      <% } else { %>
+      <li><a href="/login">Login</a></li>
+      <% } %>
     </ul>
   </nav>
   <script>

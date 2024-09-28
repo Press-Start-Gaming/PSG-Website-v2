@@ -6,6 +6,9 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as DiscordStrategy } from 'passport-discord';
 
 // Load environment variables
 dotenv.config();
@@ -25,6 +28,48 @@ const pool = mysql.createPool({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
 });
+
+// Session and Passport configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // Set to true if using HTTPS
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
+
+passport.use(
+  new DiscordStrategy(
+    {
+      clientID: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      callbackURL: `${process.env.WEB_DOMAIN}/auth/discord/callback`,
+      scope: ['identify', 'guilds'],
+    },
+    (accessToken, refreshToken, profile, done) => {
+      process.nextTick(() => done(null, profile));
+    }
+  )
+);
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/auth/discord');
+}
 
 const teamMembers = {
   gabevalentine: { id: '341610972303327233' },
@@ -223,8 +268,46 @@ app.get('/privacy', (req, res) => {
   res.render('privacy');
 });
 
+// Authentication routes
+app.get('/auth/discord', passport.authenticate('discord'));
+
+app.get(
+  '/auth/discord/callback',
+  passport.authenticate('discord', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+      return res.status(500).send('Error logging out');
+    }
+    res.redirect('/');
+  });
+});
+
+// Example of a protected route
+app.get('/protected', ensureAuthenticated, (req, res) => {
+  res.send(`Hello ${req.user.username}, you are authenticated!`);
+});
+
 app.get('/.well-known/acme-challenge/:content', function (req, res) {
   res.send(req.params.content);
+});
+
+app.get('/error', (req, res) => {
+  const flashMessages = req.flash('Error');
+  const message = flashMessages.length > 0 ? flashMessages[0] : '';
+  res.render('error', { message: message });
+});
+
+// Place this code at the end of your route definitions
+app.use(function (req, res, next) {
+  req.flash('Error', 'The page you entered does no exist.');
+  return res.redirect('/error');
 });
 
 // Start the server

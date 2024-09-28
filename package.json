@@ -4,9 +4,11 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
+    "express-session": "^1.18.0",
     "mysql2": "^3.11.3",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
+    "passport": "^0.7.0",
     "path": "^0.12.7"
   }
 }
