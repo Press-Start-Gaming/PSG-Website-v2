@@ -1,0 +1,59 @@
+.tos-hero {
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.tos-hero-text {
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.tos-hero h2 {
+  font-family: 'PSG Font', sans-serif;
+  margin-bottom: 20px;
+  font-size: 48px;
+}
+
+.tos-hero h3 {
+  font-family: 'PSG Font', sans-serif;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.tos-hero p {
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+  .tos-hero h2 {
+    font-size: 36px;
+  }
+
+  .tos-hero h3 {
+    font-size: 24px;
+  }
+
+  .tos-hero p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tos-hero h2 {
+    font-size: 28px;
+  }
+
+  .tos-hero h3 {
+    font-size: 20px;
+  }
+
+  .tos-hero p {
+    font-size: 16px;
+  }
+}
