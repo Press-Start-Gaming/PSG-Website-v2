@@ -223,6 +223,10 @@ app.get('/privacy', (req, res) => {
   res.render('privacy');
 });
 
+app.get('/.well-known/acme-challenge/:content', function (req, res) {
+  res.send(req.params.content);
+});
+
 // Start the server
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running on ${process.env.WEB_DOMAIN}`);
