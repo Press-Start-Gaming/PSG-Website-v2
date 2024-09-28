@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
         if (event.entity_metadata && event.entity_metadata.location) {
           location = `<strong>Location:</strong> ${event.entity_metadata.location}`;
         } else if (event.channel_name) {
-          location = `<strong>Voice Channel:</strong> <a class="link" href="discord.gg/psg" target="_blank" rel="noopener noreferrer">${event.channel_name}</a>`;
+          location = `<strong>Voice Channel:</strong> <a class="link" href="https://discord.gg/psg" target="_blank" rel="noopener noreferrer">${event.channel_name}</a>`;
         } else {
           location = `<strong>Location:</strong> TBD`;
         }
