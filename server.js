@@ -59,9 +59,10 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (user, done) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
-      user.id,
-    ]);
+    const [rows] = await pool.query(
+      'SELECT id, username, discriminator, avatar, nickname FROM users WHERE id = ?',
+      [user.id]
+    );
     if (rows.length > 0) {
       done(null, rows[0]);
     } else {
@@ -96,9 +97,10 @@ passport.use(
 
         const nickname = guildMember.nick || profile.username;
 
-        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
-          profile.id,
-        ]);
+        const [rows] = await pool.query(
+          'SELECT id, username, discriminator, avatar, nickname FROM users WHERE id = ?',
+          [profile.id]
+        );
         if (rows.length > 0) {
           // User exists, update their data
           await pool.query(

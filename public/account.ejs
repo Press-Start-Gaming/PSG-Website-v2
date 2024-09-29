@@ -21,5 +21,10 @@
     </main>
 
     <%- include('footer') %>
+
+    <script>
+      var user = JSON.parse('<%- JSON.stringify(user) %>') || null;
+    </script>
+    <script src="/js/account.js"></script>
   </body>
 </html>
