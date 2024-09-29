@@ -62,8 +62,10 @@ passport.deserializeUser(async (user, done) => {
       user.id,
     ]);
     if (rows.length > 0) {
+      console.log('User found in database:', rows[0]); // Debug statement
       done(null, rows[0]);
     } else {
+      console.log('User not found in database, using session user:', user); // Debug statement
       done(null, user);
     }
   } catch (err) {
@@ -297,7 +299,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-  console.log(req.user);
+  console.log('User in / route:', req.user); // Debug statement
   res.render('index', { user: req.user });
 });
 
