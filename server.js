@@ -219,19 +219,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { user: req.user });
 });
 
 app.get('/about', (req, res) => {
-  res.render('about', { teamMembers });
+  res.render('about', { user: req.user, teamMembers });
 });
 
 app.get('/merch', (req, res) => {
-  res.render('merch');
+  res.render('merch', { user: req.user });
 });
 
 app.get('/rent-a-server', (req, res) => {
-  res.render('rent-a-server');
+  res.render('rent-a-server', { user: req.user });
 });
 
 app.get('/merch-data', async (req, res) => {
@@ -245,7 +245,7 @@ app.get('/merch-data', async (req, res) => {
 });
 
 app.get('/events', (req, res) => {
-  res.render('events');
+  res.render('events', { user: req.user });
 });
 
 app.get('/events-data', async (req, res) => {
@@ -261,11 +261,11 @@ app.get('/events-data', async (req, res) => {
 });
 
 app.get('/tos', (req, res) => {
-  res.render('tos');
+  res.render('tos', { user: req.user });
 });
 
 app.get('/privacy', (req, res) => {
-  res.render('privacy');
+  res.render('privacy', { user: req.user });
 });
 
 // Authentication routes
@@ -301,7 +301,7 @@ app.get('/.well-known/acme-challenge/:content', function (req, res) {
 app.get('/error', (req, res) => {
   const flashMessages = req.flash('Error');
   const message = flashMessages.length > 0 ? flashMessages[0] : '';
-  res.render('error', { message: message });
+  res.render('error', { message: message, user: req.user });
 });
 
 // Place this code at the end of your route definitions
