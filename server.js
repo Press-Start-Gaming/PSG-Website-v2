@@ -45,7 +45,7 @@ app.use(passport.session());
 app.use(flash());
 
 passport.serializeUser((user, done) => {
-  // Store only the necessary fields in the session
+  console.log('Serializing user:', user); // Debug statement
   done(null, {
     id: user.id,
     username: user.username,
@@ -56,8 +56,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (user, done) => {
+  console.log('Deserializing user:', user); // Debug statement
   try {
-    // Fetch user data from the database if needed
     const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
       user.id,
     ]);
@@ -358,6 +358,7 @@ app.get(
   '/auth/discord/callback',
   passport.authenticate('discord', { failureRedirect: '/' }),
   (req, res) => {
+    console.log('Authenticated user:', req.user); // Debug statement
     res.redirect('/');
   }
 );
@@ -374,6 +375,7 @@ app.get('/logout', (req, res) => {
 
 // Example of a protected route
 app.get('/protected', ensureAuthenticated, (req, res) => {
+  console.log('Protected route user:', req.user); // Debug statement
   res.send(`Hello ${req.user.username}, you are authenticated!`);
 });
 
