@@ -36,7 +36,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Set to true if using HTTPS
+    cookie: { secure: true },
   })
 );
 
@@ -45,11 +45,30 @@ app.use(passport.session());
 app.use(flash());
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  // Store only the necessary fields in the session
+  done(null, {
+    id: user.id,
+    username: user.username,
+    discriminator: user.discriminator,
+    avatar: user.avatar,
+    nickname: user.nickname,
+  });
 });
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser(async (user, done) => {
+  try {
+    // Fetch user data from the database if needed
+    const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
+      user.id,
+    ]);
+    if (rows.length > 0) {
+      done(null, rows[0]);
+    } else {
+      done(null, user);
+    }
+  } catch (err) {
+    done(err, null);
+  }
 });
 
 passport.use(
@@ -92,7 +111,14 @@ passport.use(
             ]
           );
         }
-        return done(null, profile);
+        // Pass only the necessary fields to the done callback
+        return done(null, {
+          id: profile.id,
+          username: profile.username,
+          discriminator: profile.discriminator,
+          avatar: profile.avatar,
+          nickname: profile.nickname,
+        });
       } catch (err) {
         return done(err, null);
       }
