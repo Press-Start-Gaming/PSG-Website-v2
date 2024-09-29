@@ -36,13 +36,16 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    cookie: { secure: true, maxAge: 24 * 60 * 60 * 1000 },
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+// Enable trust proxy
+app.set('trust proxy', 1);
 
 passport.serializeUser((user, done) => {
   console.log('Serializing user:', user); // Debug statement
@@ -299,6 +302,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
+  console.log('Session:', req.session); // Debug statement
   console.log('User in / route:', req.user); // Debug statement
   res.render('index', { user: req.user });
 });
