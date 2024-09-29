@@ -46,11 +46,17 @@ app.use(passport.session());
 app.use(flash());
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user.id);
 });
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser(async (id, done) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
+    const user = rows[0];
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });
 
 passport.use(
@@ -61,8 +67,31 @@ passport.use(
       callbackURL,
       scope: ['identify', 'guilds'],
     },
-    (accessToken, refreshToken, profile, done) => {
-      process.nextTick(() => done(null, profile));
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        // Assuming you have a users table and a function to find or create a user
+        const [rows] = await pool.query(
+          'SELECT * FROM users WHERE discord_id = ?',
+          [profile.id]
+        );
+        let user = rows[0];
+
+        if (!user) {
+          const [result] = await pool.query(
+            'INSERT INTO users (discord_id, username) VALUES (?, ?)',
+            [profile.id, profile.username]
+          );
+          user = {
+            id: result.insertId,
+            discord_id: profile.id,
+            username: profile.username,
+          };
+        }
+
+        return done(null, user);
+      } catch (err) {
+        return done(err, null);
+      }
     }
   )
 );
@@ -222,6 +251,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
+  console.log(req.user);
   res.render('index', { user: req.user });
 });
 
