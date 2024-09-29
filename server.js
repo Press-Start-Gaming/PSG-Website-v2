@@ -20,7 +20,6 @@ const DISCORD_API_URL = 'https://discord.com/api/v9';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const avatarsDir = path.join(__dirname, 'public', 'resources', 'avatars');
-const callbackURL = `${process.env.WEB_DOMAIN}/auth/discord/callback`;
 
 // Database connection
 const pool = mysql.createPool({
@@ -37,7 +36,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    cookie: { secure: false }, // Set to true if using HTTPS
   })
 );
 
@@ -46,17 +45,11 @@ app.use(passport.session());
 app.use(flash());
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
-    const user = rows[0];
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
 });
 
 passport.use(
@@ -64,31 +57,42 @@ passport.use(
     {
       clientID: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL,
+      callbackURL: `${process.env.WEB_DOMAIN}/auth/discord/callback`,
       scope: ['identify', 'guilds'],
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Assuming you have a users table and a function to find or create a user
-        const [rows] = await pool.query(
-          'SELECT * FROM users WHERE discord_id = ?',
-          [profile.id]
-        );
-        let user = rows[0];
-
-        if (!user) {
-          const [result] = await pool.query(
-            'INSERT INTO users (discord_id, username) VALUES (?, ?)',
-            [profile.id, profile.username]
+        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
+          profile.id,
+        ]);
+        if (rows.length > 0) {
+          // User exists, update their data
+          await pool.query(
+            'UPDATE users SET username = ?, discriminator = ?, avatar = ?, accessToken = ?, refreshToken = ? WHERE id = ?',
+            [
+              profile.username,
+              profile.discriminator,
+              profile.avatar,
+              accessToken,
+              refreshToken,
+              profile.id,
+            ]
           );
-          user = {
-            id: result.insertId,
-            discord_id: profile.id,
-            username: profile.username,
-          };
+        } else {
+          // User does not exist, insert new user
+          await pool.query(
+            'INSERT INTO users (id, username, discriminator, avatar, accessToken, refreshToken) VALUES (?, ?, ?, ?, ?, ?)',
+            [
+              profile.id,
+              profile.username,
+              profile.discriminator,
+              profile.avatar,
+              accessToken,
+              refreshToken,
+            ]
+          );
         }
-
-        return done(null, user);
+        return done(null, profile);
       } catch (err) {
         return done(err, null);
       }
@@ -251,7 +255,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-  console.log(req.user);
   res.render('index', { user: req.user });
 });
 
@@ -302,6 +305,10 @@ app.get('/privacy', (req, res) => {
 });
 
 // Authentication routes
+app.get('/login', (req, res) => {
+  res.redirect('/auth/discord');
+});
+
 app.get('/auth/discord', passport.authenticate('discord'));
 
 app.get(
