@@ -33,17 +33,16 @@
       <li><a href="/rent-a-server">Rent a Server</a></li>
       <% if (user) { %>
       <li>
-        <a href="/profile"
-          >Logged in as:
+        <a href="/profile">
           <img
             src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png"
             alt="User Avatar"
             width="30"
             height="30"
-            class="rounded-circle"
+            class="user-avatar"
           />
-          <%= user.username %></a
-        >
+          <span class="username-text"><%= user.username %></span>
+        </a>
       </li>
       <li><a href="/logout">Logout</a></li>
       <% } else { %>
