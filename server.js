@@ -9,6 +9,7 @@ import mysql from 'mysql2/promise';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as DiscordStrategy } from 'passport-discord';
+import flash from 'connect-flash';
 
 // Load environment variables
 dotenv.config();
@@ -35,12 +36,13 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Set to true if using HTTPS
+    cookie: { secure: true },
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 passport.serializeUser((user, done) => {
   done(null, user);
