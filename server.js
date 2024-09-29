@@ -81,26 +81,41 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        // Fetch the user's guild member information
+        const guildId = process.env.DISCORD_GUILD_ID;
+        const response = await fetch(
+          `${DISCORD_API_URL}/guilds/${guildId}/members/${profile.id}`,
+          {
+            headers: {
+              Authorization: `Bot ${process.env.BOT_TOKEN}`,
+            },
+          }
+        );
+        const guildMember = await response.json();
+
+        const nickname = guildMember.nick || profile.username;
+
         const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
           profile.id,
         ]);
         if (rows.length > 0) {
           // User exists, update their data
           await pool.query(
-            'UPDATE users SET username = ?, discriminator = ?, avatar = ?, accessToken = ?, refreshToken = ? WHERE id = ?',
+            'UPDATE users SET username = ?, discriminator = ?, avatar = ?, accessToken = ?, refreshToken = ?, nickname = ? WHERE id = ?',
             [
               profile.username,
               profile.discriminator,
               profile.avatar,
               accessToken,
               refreshToken,
+              nickname,
               profile.id,
             ]
           );
         } else {
           // User does not exist, insert new user
           await pool.query(
-            'INSERT INTO users (id, username, discriminator, avatar, accessToken, refreshToken) VALUES (?, ?, ?, ?, ?, ?)',
+            'INSERT INTO users (id, username, discriminator, avatar, accessToken, refreshToken, nickname) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [
               profile.id,
               profile.username,
@@ -108,6 +123,7 @@ passport.use(
               profile.avatar,
               accessToken,
               refreshToken,
+              nickname,
             ]
           );
         }
@@ -117,7 +133,7 @@ passport.use(
           username: profile.username,
           discriminator: profile.discriminator,
           avatar: profile.avatar,
-          nickname: profile.nickname,
+          nickname: nickname, // Include the nickname
         });
       } catch (err) {
         return done(err, null);
@@ -281,6 +297,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
+  console.log(req.user);
   res.render('index', { user: req.user });
 });
 
