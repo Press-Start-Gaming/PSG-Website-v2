@@ -48,7 +48,6 @@ app.use(flash());
 app.set('trust proxy', 1);
 
 passport.serializeUser((user, done) => {
-  console.log('Serializing user:', user); // Debug statement
   done(null, {
     id: user.id,
     username: user.username,
@@ -59,16 +58,13 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (user, done) => {
-  console.log('Deserializing user:', user); // Debug statement
   try {
     const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [
       user.id,
     ]);
     if (rows.length > 0) {
-      console.log('User found in database:', rows[0]); // Debug statement
       done(null, rows[0]);
     } else {
-      console.log('User not found in database, using session user:', user); // Debug statement
       done(null, user);
     }
   } catch (err) {
@@ -138,7 +134,7 @@ passport.use(
           username: profile.username,
           discriminator: profile.discriminator,
           avatar: profile.avatar,
-          nickname: nickname, // Include the nickname
+          nickname: nickname,
         });
       } catch (err) {
         return done(err, null);
@@ -302,8 +298,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.get('/', (req, res) => {
-  console.log('Session:', req.session); // Debug statement
-  console.log('User in / route:', req.user); // Debug statement
   res.render('index', { user: req.user });
 });
 
@@ -364,8 +358,7 @@ app.get(
   '/auth/discord/callback',
   passport.authenticate('discord', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('Authenticated user:', req.user); // Debug statement
-    res.redirect('/');
+    res.redirect('/account');
   }
 );
 
@@ -381,8 +374,11 @@ app.get('/logout', (req, res) => {
 
 // Example of a protected route
 app.get('/protected', ensureAuthenticated, (req, res) => {
-  console.log('Protected route user:', req.user); // Debug statement
   res.send(`Hello ${req.user.username}, you are authenticated!`);
+});
+
+app.get('/account', ensureAuthenticated, (req, res) => {
+  res.render('account', { user: req.user });
 });
 
 app.get('/.well-known/acme-challenge/:content', function (req, res) {
