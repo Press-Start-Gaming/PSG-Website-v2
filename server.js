@@ -20,6 +20,7 @@ const DISCORD_API_URL = 'https://discord.com/api/v9';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const avatarsDir = path.join(__dirname, 'public', 'resources', 'avatars');
+const callbackURL = `${process.env.WEB_DOMAIN}/auth/discord/callback`;
 
 // Database connection
 const pool = mysql.createPool({
@@ -57,7 +58,7 @@ passport.use(
     {
       clientID: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL: `${process.env.WEB_DOMAIN}/auth/discord/callback`,
+      callbackURL,
       scope: ['identify', 'guilds'],
     },
     (accessToken, refreshToken, profile, done) => {
