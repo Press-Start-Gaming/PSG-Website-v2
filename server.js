@@ -54,7 +54,6 @@ passport.serializeUser((user, done) => {
   done(null, {
     id: user.id,
     username: user.username,
-    discriminator: user.discriminator,
     avatar: user.avatar,
     nickname: user.nickname,
   });
@@ -63,7 +62,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (user, done) => {
   try {
     const [rows] = await pool.query(
-      'SELECT id, username, discriminator, avatar, nickname FROM users WHERE id = ?',
+      'SELECT id, username, avatar, nickname FROM users WHERE id = ?',
       [user.id]
     );
     if (rows.length > 0) {
@@ -101,16 +100,15 @@ passport.use(
         const nickname = guildMember.nick || profile.username;
 
         const [rows] = await pool.query(
-          'SELECT id, username, discriminator, avatar, nickname FROM users WHERE id = ?',
+          'SELECT id, username, avatar, nickname FROM users WHERE id = ?',
           [profile.id]
         );
         if (rows.length > 0) {
           // User exists, update their data
           await pool.query(
-            'UPDATE users SET username = ?, discriminator = ?, avatar = ?, accessToken = ?, refreshToken = ?, nickname = ? WHERE id = ?',
+            'UPDATE users SET username = ?, avatar = ?, accessToken = ?, refreshToken = ?, nickname = ? WHERE id = ?',
             [
               profile.username,
-              profile.discriminator,
               profile.avatar,
               accessToken,
               refreshToken,
@@ -121,11 +119,10 @@ passport.use(
         } else {
           // User does not exist, insert new user
           await pool.query(
-            'INSERT INTO users (id, username, discriminator, avatar, accessToken, refreshToken, nickname) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO users (id, username, avatar, accessToken, refreshToken, nickname) VALUES (?, ?, ?, ?, ?, ?)',
             [
               profile.id,
               profile.username,
-              profile.discriminator,
               profile.avatar,
               accessToken,
               refreshToken,
@@ -137,7 +134,6 @@ passport.use(
         return done(null, {
           id: profile.id,
           username: profile.username,
-          discriminator: profile.discriminator,
           avatar: profile.avatar,
           nickname: nickname,
         });
